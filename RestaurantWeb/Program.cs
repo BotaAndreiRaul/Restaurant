@@ -1,7 +1,12 @@
+using RestaurantWeb.Data;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<MeniuDbContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("Key")
+    )) ;
 
 var app = builder.Build();
 
