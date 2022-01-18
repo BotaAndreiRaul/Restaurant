@@ -2,6 +2,7 @@
 using RestaurantWeb.Data;
 using RestaurantWeb.Models;
 
+
 namespace RestaurantWeb.Controllers
 {
     public class MeniuController : Controller
@@ -19,7 +20,7 @@ namespace RestaurantWeb.Controllers
 
         //Get 
         public IActionResult Create()
-        {            
+        {
             return View();
         }
 
@@ -28,7 +29,7 @@ namespace RestaurantWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Meniu obj)
         {
-            if(obj.Name == obj.Ingredients)
+            if (obj.Name == obj.Ingredients)
             {
                 ModelState.AddModelError("Name", "The Ingrediends field cannot match the Name field ");
             }
@@ -43,12 +44,12 @@ namespace RestaurantWeb.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
             var obj = mdb.menius.Find(id);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -72,5 +73,35 @@ namespace RestaurantWeb.Controllers
             }
             return View(obj);
         }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = mdb.menius.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Meniu obj)
+        {
+            if (obj == null)
+            {
+                return NotFound();
+            }          
+                mdb.menius.Remove(obj);
+                mdb.SaveChanges();
+                return RedirectToAction("Index");
+
+        }
+       
     }
 }
