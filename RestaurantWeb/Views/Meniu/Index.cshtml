@@ -9,7 +9,7 @@
             <h2 class="text-primary">Menu List</h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Menu" asp-action="Create Menu" class ="btn btn-primary">
+            <a asp-controller="Meniu" asp-action="Create" class ="btn btn-primary">
                 <i class="bi bi-plus-circle"></i> &nbsp; Create New Menu
             </a>
         </div>
@@ -25,6 +25,7 @@
             <th>
                 Menu Price
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -36,6 +37,9 @@
                 </td>
                 <td width>
                     @obj.Price
+                </td>
+                <td>
+                    
                 </td>
             </tr>
         }

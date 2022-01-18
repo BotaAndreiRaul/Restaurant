@@ -16,5 +16,32 @@ namespace RestaurantWeb.Controllers
             IEnumerable<Meniu> objMeniuList = mdb.menius;
             return View(objMeniuList);
         }
+
+        //Get 
+        public IActionResult Create()
+        {            
+            return View();
+        }
+
+        //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Meniu obj)
+        {
+            if(obj.Name == obj.Ingredients)
+            {
+                ModelState.AddModelError("Name", "The Ingrediends field cannot match the Name field ");
+            }
+            if (ModelState.IsValid)
+            {
+                mdb.menius.Add(obj);
+                mdb.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+      
+       
     }
 }
