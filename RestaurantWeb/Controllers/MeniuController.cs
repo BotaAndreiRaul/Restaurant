@@ -41,7 +41,36 @@ namespace RestaurantWeb.Controllers
             return View(obj);
         }
 
-      
-       
+        public IActionResult Edit(int? id)
+        {
+            if(id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = mdb.menius.Find(id);
+            if(obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        //Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Meniu obj)
+        {
+            if (obj.Name == obj.Ingredients)
+            {
+                ModelState.AddModelError("Name", "The Ingrediends field cannot match the Name field ");
+            }
+            if (ModelState.IsValid)
+            {
+                mdb.menius.Update(obj);
+                mdb.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
     }
 }
