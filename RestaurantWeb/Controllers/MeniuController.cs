@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using RestaurantWeb.Data;
 using RestaurantWeb.Models;
-
 
 namespace RestaurantWeb.Controllers
 {
@@ -67,11 +72,18 @@ namespace RestaurantWeb.Controllers
             }
             if (ModelState.IsValid)
             {
+                Thread thread1 = new Thread(() => editThread(obj));
                 mdb.menius.Update(obj);
                 mdb.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(obj);
+        }
+
+        public void editThread(Meniu obj)
+        {
+
+            mdb.SaveChanges();
         }
 
         public IActionResult Delete(int? id)
@@ -103,7 +115,23 @@ namespace RestaurantWeb.Controllers
 
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var meniu = await mdb.menius
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (meniu == null)
+            {
+                return NotFound();
+            }
+
+            return View(meniu);
+        }
+        /*public IActionResult Details(int? id)
         {
             if (id == null || id == 0)
             {
@@ -115,6 +143,6 @@ namespace RestaurantWeb.Controllers
                 return NotFound();
             }
             return View(obj);
-        }
+        }*/
     }
 }
