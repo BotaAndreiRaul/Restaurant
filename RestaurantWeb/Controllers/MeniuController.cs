@@ -102,6 +102,19 @@ namespace RestaurantWeb.Controllers
                 return RedirectToAction("Index");
 
         }
-       
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = mdb.menius.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
     }
 }
