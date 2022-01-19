@@ -42,6 +42,7 @@ namespace RestaurantWeb.Controllers
             {
                 mdb.menius.Add(obj);
                 mdb.SaveChanges();
+                TempData["success"] = "Meniu added succesfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -75,6 +76,7 @@ namespace RestaurantWeb.Controllers
                 Thread thread1 = new Thread(() => editThread(obj));
                 mdb.menius.Update(obj);
                 mdb.SaveChanges();
+                TempData["success"] = "Meniu updated succesfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -111,7 +113,8 @@ namespace RestaurantWeb.Controllers
             }          
                 mdb.menius.Remove(obj);
                 mdb.SaveChanges();
-                return RedirectToAction("Index");
+            TempData["success"] = "Meniu deleted succesfully";
+            return RedirectToAction("Index");
 
         }
 
