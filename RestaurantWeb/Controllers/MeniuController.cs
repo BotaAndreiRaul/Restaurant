@@ -73,7 +73,6 @@ namespace RestaurantWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                Thread thread1 = new Thread(() => editThread(obj));
                 mdb.menius.Update(obj);
                 mdb.SaveChanges();
                 TempData["success"] = "Meniu updated succesfully";
@@ -81,13 +80,6 @@ namespace RestaurantWeb.Controllers
             }
             return View(obj);
         }
-
-        public void editThread(Meniu obj)
-        {
-
-            mdb.SaveChanges();
-        }
-
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
